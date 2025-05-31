@@ -1,6 +1,6 @@
 # Flexnex - Premium Style. Affordable Flex.
 
-Flexnex is a modern e-commerce platform specializing in premium quality replica products. From sneakers to watches, handbags to glasses - style that speaks, prices that don't break the bank.
+Flexnex is a modern e-commerce platform specializing in premium fashion and accessories. From sneakers to watches, handbags to glasses - style that speaks, prices that don't break the bank.
 
 ## 🌟 Features
 
