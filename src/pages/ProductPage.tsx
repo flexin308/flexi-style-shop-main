@@ -72,7 +72,7 @@ const ProductPage = () => {
     if (!product) return;
     
     // Format the message with detailed product information
-    const message = `Hi! I'm interested in purchasing the following product from Flexi.in:
+    const message = `Hi! I'm interested in purchasing the following product from Flexnex:
 
 🛍️ Product: ${product.name}
 💰 Price: ₹${product.price.toLocaleString()}

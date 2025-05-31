@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -169,8 +168,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-bold mb-1">Email Address</h3>
-                      <p className="text-gray-600">Customer Support: support@flexi.in</p>
-                      <p className="text-gray-600">Order Inquiries: orders@flexi.in</p>
+                      <p className="text-gray-600">Customer Support: support@flexnex.com</p>
+                      <p className="text-gray-600">Order Inquiries: orders@flexnex.com</p>
                     </div>
                   </div>
                   
@@ -184,7 +183,7 @@ const Contact = () => {
                     <div>
                       <h3 className="font-bold mb-1">Address</h3>
                       <p className="text-gray-600">
-                        Flexi.in Customer Experience Center<br />
+                        Flexnex Customer Experience Center<br />
                         123, Fashion Street, Luxury Lane<br />
                         Mumbai, Maharashtra 400001<br />
                         India

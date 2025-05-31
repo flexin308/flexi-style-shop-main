@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingButtons from "@/components/FloatingButtons";
@@ -17,9 +16,9 @@ const About = () => {
           ></div>
           
           <div className="container-custom relative z-10 text-white">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">About Flexi.in</h1>
-            <p className="text-xl max-w-2xl">
-              Bringing premium style to everyone at accessible prices
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">About Flexnex</h1>
+            <p className="text-xl max-w-3xl mx-auto">
+              Discover the story behind India's premier destination for premium quality replicas
             </p>
           </div>
         </div>
@@ -31,7 +30,7 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold mb-6">Our Story</h2>
                 <p className="text-gray-700 mb-4">
-                  Founded in 2020, Flexi.in was born from a simple idea: everyone deserves access to premium style without the premium price tag. We noticed that many fashion enthusiasts in India were forced to choose between unaffordable luxury items or low-quality alternatives.
+                  Founded in 2020, Flexnex was born from a simple idea: everyone deserves access to premium style without the premium price tag. We noticed that many fashion enthusiasts in India were forced to choose between unaffordable authentic pieces or low-quality knockoffs. We set out to bridge this gap.
                 </p>
                 <p className="text-gray-700 mb-4">
                   Our mission became clear – to bridge this gap by offering 7AAA/ZR quality replicas that look and feel like the real thing, without emptying your wallet. We believe that style shouldn't be exclusive, but accessible to all.
@@ -62,7 +61,7 @@ const About = () => {
         {/* Why Choose Us */}
         <section className="py-16 bg-gray-50">
           <div className="container-custom">
-            <h2 className="text-3xl font-bold mb-2 text-center">Why Choose Flexi.in</h2>
+            <h2 className="text-3xl font-bold mb-2 text-center">Why Choose Flexnex</h2>
             <p className="text-gray-600 mb-12 text-center max-w-3xl mx-auto">
               We're committed to providing you with the best shopping experience and products that exceed your expectations.
             </p>

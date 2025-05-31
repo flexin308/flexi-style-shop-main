@@ -11,13 +11,13 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-black sticky top-0 z-50">
-      <nav className="container-custom py-4 flex items-center justify-between">
+    <header className="bg-black sticky top-0 z-40">
+      <nav className="container-custom py-3 sm:py-4 flex items-center justify-between">
         <div className="flex items-center">
-          <button onClick={toggleMenu} className="lg:hidden text-white mr-4">
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <button onClick={toggleMenu} className="lg:hidden text-white mr-3 sm:mr-4">
+            {isMenuOpen ? <X size={20} className="sm:w-6 sm:h-6" /> : <Menu size={20} className="sm:w-6 sm:h-6" />}
           </button>
-          <Link to="/" className="text-gold font-montserrat font-bold text-2xl">
+          <Link to="/" className="text-gold font-montserrat font-bold text-xl sm:text-2xl">
             Flexnex
           </Link>
         </div>

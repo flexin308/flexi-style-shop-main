@@ -1,4 +1,93 @@
-# Welcome to your Lovable project
+# Flexnex - Premium Style. Affordable Flex.
+
+Flexnex is a modern e-commerce platform specializing in premium 7AAA/ZR quality replica products. From sneakers to watches, handbags to glasses - style that speaks, prices that don't break the bank.
+
+## 🌟 Features
+
+- **Responsive Design**: Fully mobile-friendly interface optimized for all devices
+- **Product Catalog**: Browse products by category with detailed product pages
+- **SEO-Friendly URLs**: Clean, slug-based URLs for better search engine optimization
+- **WhatsApp Integration**: Direct purchase via WhatsApp with detailed product information
+- **Exclusive Offers**: Dynamic promotional banners (Currently: 20% off first purchase)
+- **Modern UI**: Built with Tailwind CSS and shadcn-ui components
+
+## 🚀 Recent Updates
+
+- ✅ Fixed 404 errors on page reload (Vercel deployment ready)
+- ✅ Updated branding from "Flexi.in" to "Flexnex"
+- ✅ Enhanced mobile responsiveness across all pages
+- ✅ Added exclusive offer banner with 20% off first purchase
+- ✅ Improved WhatsApp integration with detailed product messages
+- ✅ Fixed product routing using SEO-friendly slugs
+
+## 🛠️ Technologies Used
+
+This project is built with:
+
+- **Vite** - Fast build tool and development server
+- **TypeScript** - Type-safe JavaScript
+- **React** - Component-based UI library
+- **React Router** - Client-side routing
+- **shadcn-ui** - Modern React component library
+- **Tailwind CSS** - Utility-first CSS framework
+- **Tanstack Query** - Data fetching and caching
+- **Supabase** - Backend as a service
+
+## 🚀 Development
+
+To run this project locally:
+
+```sh
+# Clone the repository
+git clone <YOUR_GIT_URL>
+
+# Navigate to the project directory
+cd flexnex
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+## 📱 Mobile-First Design
+
+Flexnex is designed with mobile users in mind:
+- Responsive navigation with mobile hamburger menu
+- Touch-friendly product cards and buttons
+- Optimized image loading and layout
+- Mobile-friendly promotional banners
+
+## 🔗 WhatsApp Integration
+
+Users can purchase products directly via WhatsApp:
+- Detailed product information automatically included
+- Quantity and pricing calculations
+- Direct contact with customer service (+91 8291821901)
+
+## 🎯 SEO & Performance
+
+- SEO-friendly product URLs using slugs
+- Optimized meta tags and Open Graph data
+- Fast loading with Vite optimization
+- Responsive images and lazy loading
+
+## 🚀 Deployment
+
+The project is configured for easy deployment on Vercel:
+- `vercel.json` configuration for SPA routing
+- Optimized build output
+- Environment variables support
+
+Visit the live site: [Flexnex](https://flexnex.vercel.app)
+
+---
+
+Built with ❤️ for fashion enthusiasts who want premium style at affordable prices.
 
 ## Project info
 

@@ -1,4 +1,3 @@
-
 const instagramPosts = [
   {
     id: 1,
@@ -32,8 +31,8 @@ const InstagramFeed = () => {
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Follow Us on Instagram</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            @flexi.in • Join our community and stay updated with the latest drops and style inspirations
+          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+            @flexnex • Join our community and stay updated with the latest drops and style inspirations
           </p>
         </div>
         
