@@ -87,7 +87,7 @@ const FeaturedProducts = () => {
             Featured Products
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto mb-2">
-            Our most popular premium quality replicas, handpicked for quality and style
+            Our most popular premium fashion items, handpicked for quality and style
           </p>
           <div className="w-20 h-1 bg-gradient-to-r from-gold to-yellow-500 mx-auto rounded-full"></div>
         </div>

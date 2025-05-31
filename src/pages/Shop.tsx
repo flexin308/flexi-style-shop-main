@@ -78,7 +78,7 @@ const Shop = () => {
         <div className="bg-black text-white py-12 px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">Shop All Products</h1>
           <p className="max-w-2xl mx-auto text-gray-300">
-            Browse our collection of premium quality replicas, crafted to perfection and designed to impress.
+            Browse our collection of premium fashion and accessories, crafted to perfection and designed to impress.
           </p>
         </div>
         

@@ -18,7 +18,7 @@ const About = () => {
           <div className="container-custom relative z-10 text-white">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">About Flexnex</h1>
             <p className="text-xl max-w-3xl mx-auto">
-              Discover the story behind India's premier destination for premium quality replicas
+              Discover the story behind India's premier destination for accessible premium fashion
             </p>
           </div>
         </div>
@@ -30,13 +30,13 @@ const About = () => {
               <div>
                 <h2 className="text-3xl font-bold mb-6">Our Story</h2>
                 <p className="text-gray-700 mb-4">
-                  Founded in 2020, Flexnex was born from a simple idea: everyone deserves access to premium style without the premium price tag. We noticed that many fashion enthusiasts in India were forced to choose between unaffordable authentic pieces or low-quality knockoffs. We set out to bridge this gap.
+                  Founded in 2020, Flexnex was born from a simple idea: everyone deserves access to premium style without the premium price tag. We noticed that many fashion enthusiasts in India were forced to choose between unaffordable designer pieces or compromising on quality.
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  Our mission became clear – to bridge this gap by offering premium quality replicas that look and feel like the real thing, without emptying your wallet. We believe that style shouldn't be exclusive, but accessible to all.
+                  Our mission became clear – to bridge this gap by offering premium fashion and accessories that deliver exceptional style and quality, without emptying your wallet. We believe that great style should be accessible to all.
                 </p>
                 <p className="text-gray-700">
-                  Today, we've grown into one of India's most trusted sources for premium quality replicas, serving thousands of satisfied customers nationwide. Our commitment to quality, transparency, and customer satisfaction remains at the heart of everything we do.
+                  Today, we've grown into one of India's most trusted sources for premium fashion and accessories, serving thousands of satisfied customers nationwide. Our commitment to quality, innovation, and customer satisfaction remains at the heart of everything we do.
                 </p>
               </div>
               <div className="relative">
@@ -75,7 +75,7 @@ const About = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Premium Quality</h3>
                 <p className="text-gray-700">
-                  Our products undergo rigorous quality checks to ensure they match the look, feel, and durability of the original items. We only source from the best manufacturers.
+                  Our products undergo rigorous quality checks to ensure they meet the highest standards of design, materials, and craftsmanship. We partner with skilled artisans and manufacturers.
                 </p>
               </div>
               
@@ -124,9 +124,9 @@ const About = () => {
                 <div className="w-16 h-16 bg-gold rounded-full flex items-center justify-center mx-auto mb-4 text-black font-bold text-xl">
                   1
                 </div>
-                <h3 className="font-bold mb-2">Careful Sourcing</h3>
+                <h3 className="font-bold mb-2">Quality Sourcing</h3>
                 <p className="text-gray-600">
-                  We partner with manufacturers who specialize in creating high-quality replicas with attention to detail.
+                  We partner with skilled manufacturers who specialize in creating high-quality fashion and accessories with exceptional attention to detail.
                 </p>
               </div>
               
@@ -136,7 +136,7 @@ const About = () => {
                 </div>
                 <h3 className="font-bold mb-2">Quality Inspection</h3>
                 <p className="text-gray-600">
-                  Each product undergoes thorough quality checks to ensure it meets our premium standards.
+                  Each product undergoes thorough quality checks to ensure it meets our exceptional standards for style and durability.
                 </p>
               </div>
               
@@ -168,7 +168,7 @@ const About = () => {
           <div className="container-custom">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Upgrade Your Style?</h2>
             <p className="text-lg text-gray-700 mb-8">
-              Browse our collection of premium quality replica products and find your perfect flex.
+              Browse our collection of premium fashion and accessories and find your perfect style.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/shop" className="bg-gold hover:bg-darkgold text-black font-medium px-8 py-3 rounded transition-colors">

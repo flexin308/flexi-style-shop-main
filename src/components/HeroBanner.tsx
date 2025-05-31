@@ -55,7 +55,7 @@ const HeroBanner = () => {
           {/* Enhanced description */}
           <div className="mb-8 overflow-hidden">
             <p className="text-lg md:text-xl lg:text-2xl mb-4 text-gray-200 leading-relaxed animate-fadeInUp" style={{ animationDelay: '0.3s' }}>
-              Discover our collection of high-quality <span className="text-gold font-semibold">premium quality</span> replica products.
+              Discover our collection of <span className="text-gold font-semibold">premium fashion</span> and style products.
             </p>
             <p className="text-base md:text-lg text-gray-300 animate-fadeInUp" style={{ animationDelay: '0.5s' }}>
               Elevate your style without breaking the bank. Premium quality, unbeatable prices.

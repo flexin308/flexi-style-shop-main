@@ -39,7 +39,7 @@ const CategoryGrid = () => {
             Shop By Category
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto mb-2">
-            Browse our premium collection of high-quality replicas, curated for style and quality
+            Browse our premium collection of fashion and accessories, curated for style and quality
           </p>
           <div className="w-20 h-1 bg-gradient-to-r from-gold to-yellow-500 mx-auto rounded-full"></div>
         </div>

@@ -139,8 +139,8 @@ Thank you!`;
       ? product.features 
       : typeof product.features === 'object' 
         ? Object.values(product.features)
-        : ["Premium quality replica"]
-    : ["Premium quality replica"];
+        : ["Premium quality product"]
+    : ["Premium quality product"];
   
   return (
     <div className="flex flex-col min-h-screen">

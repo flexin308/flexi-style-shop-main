@@ -9,8 +9,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold text-gold mb-4">Flexnex</h3>
-            <p className="text-gray-600 mb-4">
-              Your destination for premium quality replicas. Style that speaks, prices that don't break the bank.
+            <p className="text-gray-300 mb-6 max-w-xs">
+              Your destination for premium fashion and accessories. Quality that speaks, prices that don't break the bank.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-gold transition-colors">
@@ -43,12 +43,13 @@ const Footer = () => {
           </div>
           
           <div>
-            <h4 className="text-lg font-semibold mb-4">Help</h4>
+            <h4 className="text-lg font-semibold mb-4">Customer Care</h4>
             <ul className="space-y-2">
               <li><Link to="/shipping" className="text-gray-300 hover:text-gold transition-colors">Shipping Policy</Link></li>
               <li><Link to="/returns" className="text-gray-300 hover:text-gold transition-colors">Returns & Exchanges</Link></li>
               <li><Link to="/cod" className="text-gray-300 hover:text-gold transition-colors">Cash on Delivery</Link></li>
               <li><Link to="/faq" className="text-gray-300 hover:text-gold transition-colors">FAQ</Link></li>
+              <li><Link to="/contact" className="text-gray-300 hover:text-gold transition-colors">Customer Support</Link></li>
             </ul>
           </div>
           
@@ -56,8 +57,8 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2">
               <li className="text-gray-300">Email: info@flexnex.com</li>
-              <li className="text-gray-300">WhatsApp: +91 98765 43210</li>
-              <li><Link to="/contact" className="text-gray-300 hover:text-gold transition-colors">Contact Form</Link></li>
+              <li className="text-gray-300">Support: support@flexnex.com</li>
+              <li className="text-gray-300">WhatsApp: +91 8291821901</li>
               <li><Link to="/about" className="text-gray-300 hover:text-gold transition-colors">About Us</Link></li>
             </ul>
           </div>
