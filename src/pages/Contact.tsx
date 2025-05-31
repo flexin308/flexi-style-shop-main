@@ -246,7 +246,7 @@ const Contact = () => {
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h3 className="font-bold mb-2">What is the quality of your products?</h3>
                   <p className="text-gray-700">
-                    We offer 7AAA/ZR quality replicas, which means they are meticulously crafted to closely resemble the original items in terms of design, materials, and finish. While they are replicas, they are premium quality with excellent attention to detail.
+                    We offer premium quality replicas, which means they are meticulously crafted to closely resemble the original items in terms of design, materials, and finish. While they are replicas, they are premium quality with excellent attention to detail.
                   </p>
                 </div>
                 

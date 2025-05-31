@@ -80,21 +80,33 @@ const FeaturedProducts = () => {
   }, [activeTab, toast]);
   
   return (
-    <section className="section-padding">
+    <section className="section-padding bg-white">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Products</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Our most popular 7AAA/ZR quality replicas, handpicked for quality and style
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-black to-gray-700 bg-clip-text text-transparent">
+            Featured Products
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-2">
+            Our most popular premium quality replicas, handpicked for quality and style
           </p>
+          <div className="w-20 h-1 bg-gradient-to-r from-gold to-yellow-500 mx-auto rounded-full"></div>
         </div>
         
         <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
           <div className="flex justify-center mb-8 overflow-x-auto">
-            <TabsList className="bg-gray-100">
-              <TabsTrigger value="all">All Products</TabsTrigger>
-              {categories.map((category) => (
-                <TabsTrigger key={category.id} value={category.slug}>
+            <TabsList className="bg-gray-100 p-1 rounded-full">
+              <TabsTrigger 
+                value="all" 
+                className="rounded-full px-4 py-2 text-sm font-medium transition-all data-[state=active]:bg-gold data-[state=active]:text-black"
+              >
+                All Products
+              </TabsTrigger>
+              {categories.slice(0, 3).map((category) => (
+                <TabsTrigger 
+                  key={category.id} 
+                  value={category.slug}
+                  className="rounded-full px-4 py-2 text-sm font-medium transition-all data-[state=active]:bg-gold data-[state=active]:text-black"
+                >
                   {category.name}
                 </TabsTrigger>
               ))}
@@ -103,33 +115,43 @@ const FeaturedProducts = () => {
           
           <TabsContent value={activeTab} className="mt-0">
             {isLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {[...Array(4)].map((_, index) => (
-                  <div key={index} className="h-64 bg-gray-100 animate-pulse rounded-lg"></div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {[...Array(8)].map((_, index) => (
+                  <div key={index} className="h-64 md:h-80 bg-gray-100 animate-pulse rounded-xl shadow-lg"></div>
                 ))}
               </div>
             ) : products.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {products.map(product => (
-                  <ProductCard 
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {products.map((product, index) => (
+                  <div 
                     key={product.id} 
-                    product={{
-                      id: product.id,
-                      name: product.name,
-                      category: activeTab === "all" 
-                        ? categories.find(c => c.id === product.category_id)?.name.toLowerCase() || "" 
-                        : activeTab,
-                      price: product.price,
-                      image: product.images[0],
-                      isBestseller: product.is_bestseller,
-                      isNew: product.is_new,
-                      slug: product.slug
-                    }} 
-                  />
+                    className="animate-fadeInUp" 
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <ProductCard 
+                      product={{
+                        id: product.id,
+                        name: product.name,
+                        category: activeTab === "all" 
+                          ? categories.find(c => c.id === product.category_id)?.name.toLowerCase() || "" 
+                          : activeTab,
+                        price: product.price,
+                        image: product.images[0],
+                        isBestseller: product.is_bestseller,
+                        isNew: product.is_new,
+                        slug: product.slug
+                      }} 
+                    />
+                  </div>
                 ))}
               </div>
             ) : (
               <div className="text-center py-12">
+                <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                  <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2M4 13h2m13-4H7" />
+                  </svg>
+                </div>
                 <h3 className="font-medium text-xl mb-2">No featured products found</h3>
                 <p className="text-gray-600">Check back later for new additions</p>
               </div>
@@ -137,8 +159,11 @@ const FeaturedProducts = () => {
             
             <div className="mt-12 text-center">
               <Link to="/shop">
-                <Button className="bg-black hover:bg-gray-800 text-white px-8 py-6">
+                <Button className="bg-gradient-to-r from-black to-gray-800 hover:from-gray-800 hover:to-black text-white px-8 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 font-bold">
                   View All Products
+                  <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </Button>
               </Link>
             </div>

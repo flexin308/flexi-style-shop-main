@@ -9,8 +9,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xl font-bold text-gold mb-4">Flexnex</h3>
-            <p className="text-gray-300 mb-6 max-w-xs">
-              Your destination for premium 7AAA/ZR quality replicas. Style that speaks, prices that don't break the bank.
+            <p className="text-gray-600 mb-4">
+              Your destination for premium quality replicas. Style that speaks, prices that don't break the bank.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-gold transition-colors">

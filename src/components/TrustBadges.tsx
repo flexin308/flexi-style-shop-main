@@ -1,8 +1,7 @@
-
 const trustFeatures = [
   {
     id: "quality",
-    title: "7AAA/ZR Quality",
+    title: "Premium Quality",
     description: "Premium quality replicas, meticulously crafted",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -50,23 +49,68 @@ const trustFeatures = [
 
 const TrustBadges = () => {
   return (
-    <section className="bg-gray-50 py-16">
+    <section className="bg-gradient-to-br from-white via-gray-50 to-gray-100 py-16 md:py-20">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-2">Why Shop With Us</h2>
-          <p className="text-gray-600">We prioritize quality and customer satisfaction</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-black to-gray-700 bg-clip-text text-transparent">
+            Why Shop With Us
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-2">
+            We prioritize quality and customer satisfaction with every order
+          </p>
+          <div className="w-20 h-1 bg-gradient-to-r from-gold to-yellow-500 mx-auto rounded-full"></div>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {trustFeatures.map((feature) => (
-            <div key={feature.id} className="bg-white p-6 rounded-lg shadow-sm text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-gold/10 text-gold rounded-full mb-4">
-                {feature.icon}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          {trustFeatures.map((feature, index) => (
+            <div 
+              key={feature.id} 
+              className="group bg-white p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl text-center transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 hover:border-gold/20"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className="relative">
+                <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-gold/20 to-yellow-500/20 text-gold rounded-full mb-4 group-hover:scale-110 transition-transform duration-300 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-transparent rounded-full transform rotate-45 group-hover:animate-ping"></div>
+                  <div className="relative z-10">
+                    {feature.icon}
+                  </div>
+                </div>
               </div>
-              <h3 className="font-bold text-lg mb-2">{feature.title}</h3>
-              <p className="text-gray-600 text-sm">{feature.description}</p>
+              <h3 className="font-bold text-sm md:text-lg mb-2 group-hover:text-gold transition-colors duration-300">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600 text-xs md:text-sm leading-relaxed">
+                {feature.description}
+              </p>
+              
+              {/* Decorative element */}
+              <div className="mt-4 w-8 h-0.5 bg-gradient-to-r from-gold to-transparent mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
           ))}
+        </div>
+        
+        {/* Additional trust indicators */}
+        <div className="mt-16 text-center">
+          <div className="inline-flex items-center space-x-8 p-6 bg-white rounded-full shadow-lg">
+            <div className="flex items-center space-x-2">
+              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              <span className="text-sm font-medium text-gray-700">50,000+ Happy Customers</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              <span className="text-sm font-medium text-gray-700">4.8/5 Rating</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              <span className="text-sm font-medium text-gray-700">Trusted Since 2020</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

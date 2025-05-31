@@ -78,7 +78,7 @@ const Shop = () => {
         <div className="bg-black text-white py-12 px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-4">Shop All Products</h1>
           <p className="max-w-2xl mx-auto text-gray-300">
-            Browse our collection of 7AAA/ZR quality replicas, crafted to perfection and designed to impress.
+            Browse our collection of premium quality replicas, crafted to perfection and designed to impress.
           </p>
         </div>
         
@@ -177,33 +177,53 @@ const Shop = () => {
               </div>
               
               {isLoading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {[...Array(6)].map((_, index) => (
-                    <div key={index} className="h-64 bg-gray-100 animate-pulse rounded-lg"></div>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                  {[...Array(8)].map((_, index) => (
+                    <div key={index} className="h-64 md:h-80 bg-gray-100 animate-pulse rounded-xl shadow-lg"></div>
                   ))}
                 </div>
               ) : filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredProducts.map((product) => (
-                    <ProductCard 
-                      key={product.id} 
-                      product={{
-                        id: product.id,
-                        name: product.name,
-                        category: categories.find(cat => cat.id === product.category_id)?.name.toLowerCase() || "",
-                        price: product.price,
-                        image: product.images[0],
-                        isBestseller: product.is_bestseller,
-                        isNew: product.is_new,
-                        slug: product.slug
-                      }} 
-                    />
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                  {filteredProducts.map((product, index) => (
+                    <div 
+                      key={product.id}
+                      className="animate-fadeInUp" 
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <ProductCard 
+                        product={{
+                          id: product.id,
+                          name: product.name,
+                          category: categories.find(cat => cat.id === product.category_id)?.name.toLowerCase() || "",
+                          price: product.price,
+                          image: product.images[0],
+                          isBestseller: product.is_bestseller,
+                          isNew: product.is_new,
+                          slug: product.slug
+                        }} 
+                      />
+                    </div>
                   ))}
                 </div>
               ) : (
                 <div className="text-center py-12">
+                  <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                    <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2M4 13h2m13-4H7" />
+                    </svg>
+                  </div>
                   <h3 className="font-medium text-xl mb-2">No products found</h3>
-                  <p className="text-gray-600">Try adjusting your filters</p>
+                  <p className="text-gray-600 mb-4">Try adjusting your filters or browse all categories</p>
+                  <Button 
+                    onClick={() => {
+                      setSelectedCategory("All");
+                      setPriceRange([0, 20000]);
+                      applyFilters();
+                    }}
+                    className="bg-gold hover:bg-darkgold text-black"
+                  >
+                    Reset Filters
+                  </Button>
                 </div>
               )}
             </div>

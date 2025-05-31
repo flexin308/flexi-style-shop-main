@@ -7,6 +7,7 @@ import FloatingButtons from "@/components/FloatingButtons";
 import { getCategory, getProducts } from "@/services/api";
 import { Category, Product } from "@/types/database";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const CategoryPage = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -23,17 +24,21 @@ const CategoryPage = () => {
         setIsLoading(true);
         
         // Get category info
+        console.log('Fetching category data for:', categoryId);
         const categoryData = await getCategory(categoryId);
+        console.log('Category data received:', categoryData);
         setCategory(categoryData);
         
         // Get category products
+        console.log('Fetching products for category:', categoryId);
         const productsData = await getProducts({ categorySlug: categoryId });
+        console.log('Products data received:', productsData);
         setProducts(productsData);
       } catch (error) {
         console.error("Error fetching category data:", error);
         toast({
-          title: "Error",
-          description: "Failed to load category data. Please try again later.",
+          title: "Error Loading Category",
+          description: `Failed to load "${categoryId}" category. Please try again or contact support.`,
           variant: "destructive",
         });
       } finally {
@@ -78,33 +83,46 @@ const CategoryPage = () => {
         {/* Product grid */}
         <div className="container-custom py-12">
           {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, index) => (
-                <div key={index} className="h-64 bg-gray-100 animate-pulse rounded-lg"></div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {[...Array(8)].map((_, index) => (
+                <div key={index} className="h-64 md:h-80 bg-gray-100 animate-pulse rounded-xl shadow-lg"></div>
               ))}
             </div>
           ) : products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {products.map((product) => (
-                <ProductCard 
-                  key={product.id} 
-                  product={{
-                    id: product.id,
-                    name: product.name,
-                    category: categoryId || '',
-                    price: product.price,
-                    image: product.images[0],
-                    isBestseller: product.is_bestseller,
-                    isNew: product.is_new,
-                    slug: product.slug
-                  }} 
-                />
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+              {products.map((product, index) => (
+                <div 
+                  key={product.id}
+                  className="animate-fadeInUp" 
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <ProductCard 
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      category: categoryId || '',
+                      price: product.price,
+                      image: product.images[0],
+                      isBestseller: product.is_bestseller,
+                      isNew: product.is_new,
+                      slug: product.slug
+                    }} 
+                  />
+                </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-12">
+              <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2M4 13h2m13-4H7" />
+                </svg>
+              </div>
               <h3 className="font-medium text-xl mb-2">No products found in this category</h3>
-              <p className="text-gray-600">Please try a different category</p>
+              <p className="text-gray-600 mb-4">We're working on adding more products to "{formattedCategoryName}"</p>
+              <Link to="/shop" className="text-gold hover:underline font-medium">
+                Browse All Products →
+              </Link>
             </div>
           )}
         </div>

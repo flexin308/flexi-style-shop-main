@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { Category, Product, Review } from "@/types/database";
 
@@ -38,11 +37,24 @@ export async function getProducts(options: {
   let query = supabase.from('products').select('*');
   
   if (options.categorySlug) {
-    // Join with categories to filter by category slug
-    query = supabase
-      .from('products')
-      .select('*, categories!inner(*)')
-      .eq('categories.slug', options.categorySlug);
+    // First get the category ID from the slug
+    const { data: categoryData, error: categoryError } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('slug', options.categorySlug)
+      .single();
+    
+    if (categoryError) {
+      console.error('Error fetching category for slug:', categoryError);
+      throw categoryError;
+    }
+    
+    if (!categoryData) {
+      return []; // Category not found, return empty array
+    }
+    
+    // Then filter products by category_id
+    query = query.eq('category_id', categoryData.id);
   }
   
   if (options.featured) {
@@ -59,15 +71,6 @@ export async function getProducts(options: {
   if (error) {
     console.error('Error fetching products:', error);
     throw error;
-  }
-  
-  // If we did a join, the products are nested with categories data
-  // We need to clean that up
-  if (options.categorySlug && data) {
-    return data.map(item => {
-      const { categories, ...product } = item as any;
-      return product as Product;
-    });
   }
   
   return data || [];

@@ -32,8 +32,8 @@ const About = () => {
                 <p className="text-gray-700 mb-4">
                   Founded in 2020, Flexnex was born from a simple idea: everyone deserves access to premium style without the premium price tag. We noticed that many fashion enthusiasts in India were forced to choose between unaffordable authentic pieces or low-quality knockoffs. We set out to bridge this gap.
                 </p>
-                <p className="text-gray-700 mb-4">
-                  Our mission became clear – to bridge this gap by offering 7AAA/ZR quality replicas that look and feel like the real thing, without emptying your wallet. We believe that style shouldn't be exclusive, but accessible to all.
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Our mission became clear – to bridge this gap by offering premium quality replicas that look and feel like the real thing, without emptying your wallet. We believe that style shouldn't be exclusive, but accessible to all.
                 </p>
                 <p className="text-gray-700">
                   Today, we've grown into one of India's most trusted sources for premium quality replicas, serving thousands of satisfied customers nationwide. Our commitment to quality, transparency, and customer satisfaction remains at the heart of everything we do.
@@ -73,7 +73,7 @@ const About = () => {
                     <path d="M12 2L15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2z"></path>
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold mb-3">7AAA/ZR Quality</h3>
+                <h3 className="text-xl font-bold mb-3">Premium Quality</h3>
                 <p className="text-gray-700">
                   Our products undergo rigorous quality checks to ensure they match the look, feel, and durability of the original items. We only source from the best manufacturers.
                 </p>
@@ -136,7 +136,7 @@ const About = () => {
                 </div>
                 <h3 className="font-bold mb-2">Quality Inspection</h3>
                 <p className="text-gray-600">
-                  Each product undergoes thorough quality checks to ensure it meets our 7AAA/ZR standards.
+                  Each product undergoes thorough quality checks to ensure it meets our premium standards.
                 </p>
               </div>
               
@@ -167,8 +167,8 @@ const About = () => {
         <section className="bg-black py-20 text-white text-center">
           <div className="container-custom">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Upgrade Your Style?</h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-              Browse our collection of premium 7AAA/ZR quality replica products and find your perfect flex.
+            <p className="text-lg text-gray-700 mb-8">
+              Browse our collection of premium quality replica products and find your perfect flex.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a href="/shop" className="bg-gold hover:bg-darkgold text-black font-medium px-8 py-3 rounded transition-colors">
