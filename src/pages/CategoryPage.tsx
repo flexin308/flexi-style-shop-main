@@ -1,0 +1,119 @@
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ProductCard from "@/components/ProductCard";
+import FloatingButtons from "@/components/FloatingButtons";
+import { getCategory, getProducts } from "@/services/api";
+import { Category, Product } from "@/types/database";
+import { useToast } from "@/hooks/use-toast";
+
+const CategoryPage = () => {
+  const { categoryId } = useParams<{ categoryId: string }>();
+  const [category, setCategory] = useState<Category | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { toast } = useToast();
+  
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      if (!categoryId) return;
+      
+      try {
+        setIsLoading(true);
+        
+        // Get category info
+        const categoryData = await getCategory(categoryId);
+        setCategory(categoryData);
+        
+        // Get category products
+        const productsData = await getProducts({ categorySlug: categoryId });
+        setProducts(productsData);
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load category data. Please try again later.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchCategoryData();
+  }, [categoryId, toast]);
+  
+  // Format the category name (capitalize first letter)
+  const formattedCategoryName = categoryId 
+    ? categoryId.charAt(0).toUpperCase() + categoryId.slice(1) 
+    : '';
+  
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      
+      <main className="flex-grow">
+        {/* Category Hero */}
+        {isLoading ? (
+          <div className="relative h-[40vh] bg-gray-200 animate-pulse"></div>
+        ) : (
+          <div className="relative h-[40vh] flex items-center">
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${category?.image || ''})` }}
+            >
+              <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+            </div>
+            
+            <div className="container-custom relative z-10 text-white">
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">
+                {category?.name || formattedCategoryName}
+              </h1>
+              <p className="text-gray-200 max-w-2xl">{category?.description}</p>
+            </div>
+          </div>
+        )}
+        
+        {/* Product grid */}
+        <div className="container-custom py-12">
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="h-64 bg-gray-100 animate-pulse rounded-lg"></div>
+              ))}
+            </div>
+          ) : products.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {products.map((product) => (
+                <ProductCard 
+                  key={product.id} 
+                  product={{
+                    id: product.id,
+                    name: product.name,
+                    category: categoryId || '',
+                    price: product.price,
+                    image: product.images[0],
+                    isBestseller: product.is_bestseller,
+                    isNew: product.is_new,
+                    slug: product.slug
+                  }} 
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <h3 className="font-medium text-xl mb-2">No products found in this category</h3>
+              <p className="text-gray-600">Please try a different category</p>
+            </div>
+          )}
+        </div>
+      </main>
+      
+      <FloatingButtons />
+      <Footer />
+    </div>
+  );
+};
+
+export default CategoryPage;
