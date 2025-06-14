@@ -16,10 +16,17 @@ const Shop = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 20000]);
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
+
+  const productsPerPage = 16; // 4x4 grid
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const currentProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
   
   // Fetch categories and products on component mount
   useEffect(() => {
@@ -61,12 +68,34 @@ const Shop = () => {
       );
     }
     
+    // Filter by gender
+    if (selectedGenders.length > 0) {
+      filtered = filtered.filter(
+        product => selectedGenders.includes(product.gender)
+      );
+    }
+    
     // Filter by price range
     filtered = filtered.filter(
       product => product.price >= priceRange[0] && product.price <= priceRange[1]
     );
     
     setFilteredProducts(filtered);
+    setCurrentPage(1); // Reset to first page when filters change
+  };
+
+  const handleGenderChange = (gender: string, checked: boolean) => {
+    if (checked) {
+      setSelectedGenders([...selectedGenders, gender]);
+    } else {
+      setSelectedGenders(selectedGenders.filter(g => g !== gender));
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top of products section
+    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
   };
   
   return (
@@ -133,6 +162,27 @@ const Shop = () => {
                     ))}
                   </div>
                 </div>
+
+                <div className="mb-6">
+                  <h4 className="font-medium mb-3">Gender</h4>
+                  <div className="space-y-2">
+                    {['men', 'women', 'unisex'].map((gender) => (
+                      <div key={gender} className="flex items-center">
+                        <Checkbox 
+                          id={`gender-${gender}`}
+                          checked={selectedGenders.includes(gender)}
+                          onCheckedChange={(checked) => handleGenderChange(gender, checked as boolean)}
+                        />
+                        <Label 
+                          htmlFor={`gender-${gender}`}
+                          className="ml-2 text-sm font-medium cursor-pointer capitalize"
+                        >
+                          {gender}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 
                 <div className="mb-6">
                   <h4 className="font-medium mb-3">Price Range</h4>
@@ -151,19 +201,33 @@ const Shop = () => {
                 </div>
                 
                 <Button 
-                  className="w-full bg-gold hover:bg-darkgold text-black"
+                  className="w-full bg-gold hover:bg-darkgold text-black mb-4"
                   onClick={applyFilters}
                 >
                   Apply Filters
+                </Button>
+
+                <Button 
+                  variant="outline"
+                  className="w-full border-gray-300 text-gray-600 hover:bg-gray-100"
+                  onClick={() => {
+                    setSelectedCategory("All");
+                    setSelectedGenders([]);
+                    setPriceRange([0, 20000]);
+                    setFilteredProducts(allProducts);
+                    setCurrentPage(1);
+                  }}
+                >
+                  Clear All Filters
                 </Button>
               </div>
             </div>
             
             {/* Products grid */}
-            <div className="flex-1">
+            <div id="products-section" className="flex-1">
               <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center">
                 <p className="text-gray-600 mb-4 md:mb-0">
-                  Showing {filteredProducts.length} products
+                  Showing {Math.min(startIndex + 1, filteredProducts.length)}-{Math.min(startIndex + productsPerPage, filteredProducts.length)} of {filteredProducts.length} products
                 </p>
                 <select 
                   className="border border-gray-300 rounded p-2 w-full md:w-auto"
@@ -178,33 +242,81 @@ const Shop = () => {
               
               {isLoading ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                  {[...Array(8)].map((_, index) => (
+                  {[...Array(16)].map((_, index) => (
                     <div key={index} className="h-64 md:h-80 bg-gray-100 animate-pulse rounded-xl shadow-lg"></div>
                   ))}
                 </div>
               ) : filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                  {filteredProducts.map((product, index) => (
-                    <div 
-                      key={product.id}
-                      className="animate-fadeInUp" 
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <ProductCard 
-                        product={{
-                          id: product.id,
-                          name: product.name,
-                          category: categories.find(cat => cat.id === product.category_id)?.name.toLowerCase() || "",
-                          price: product.price,
-                          image: product.images[0],
-                          isBestseller: product.is_bestseller,
-                          isNew: product.is_new,
-                          slug: product.slug
-                        }} 
-                      />
+                <>
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    {currentProducts.map((product, index) => (
+                      <div 
+                        key={product.id}
+                        className="animate-fadeInUp" 
+                        style={{ animationDelay: `${index * 0.1}s` }}
+                      >
+                        <ProductCard 
+                          product={{
+                            id: product.id,
+                            name: product.name,
+                            category: categories.find(cat => cat.id === product.category_id)?.name.toLowerCase() || "",
+                            price: product.price,
+                            image: product.images[0],
+                            isBestseller: product.is_bestseller,
+                            isNew: product.is_new,
+                            slug: product.slug
+                          }} 
+                        />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Pagination */}
+                  {totalPages > 1 && (
+                    <div className="flex justify-center items-center mt-12 space-x-2">
+                      <Button
+                        variant="outline"
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="px-4 py-2 border-gold text-gold hover:bg-gold hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Previous
+                      </Button>
+                      
+                      <div className="flex space-x-1">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "outline"}
+                            onClick={() => handlePageChange(page)}
+                            className={`px-4 py-2 ${
+                              currentPage === page
+                                ? "bg-gold text-black hover:bg-yellow-500"
+                                : "border-gold text-gold hover:bg-gold hover:text-black"
+                            }`}
+                          >
+                            {page}
+                          </Button>
+                        ))}
+                      </div>
+                      
+                      <Button
+                        variant="outline"
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages}
+                        className="px-4 py-2 border-gold text-gold hover:bg-gold hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        Next
+                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </Button>
                     </div>
-                  ))}
-                </div>
+                  )}
+                </>
               ) : (
                 <div className="text-center py-12">
                   <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
@@ -217,8 +329,10 @@ const Shop = () => {
                   <Button 
                     onClick={() => {
                       setSelectedCategory("All");
+                      setSelectedGenders([]);
                       setPriceRange([0, 20000]);
-                      applyFilters();
+                      setFilteredProducts(allProducts);
+                      setCurrentPage(1);
                     }}
                     className="bg-gold hover:bg-darkgold text-black"
                   >

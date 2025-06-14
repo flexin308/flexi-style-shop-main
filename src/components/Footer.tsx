@@ -73,6 +73,19 @@ const Footer = () => {
               <Link to="/sitemap" className="text-gray-400 text-sm hover:text-gold transition-colors">Sitemap</Link>
             </div>
           </div>
+          <div className="text-center mt-4 pt-4 border-t border-gray-800">
+            <p className="text-gray-500 text-sm">
+              Website developed with ❤️ by{' '}
+              <a 
+                href="https://kdrtech.in" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-gold hover:text-yellow-400 transition-colors font-medium"
+              >
+                KDRTech.in
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

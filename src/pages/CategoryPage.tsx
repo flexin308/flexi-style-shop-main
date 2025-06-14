@@ -8,13 +8,20 @@ import { getCategory, getProducts } from "@/services/api";
 import { Category, Product } from "@/types/database";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const CategoryPage = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const [category, setCategory] = useState<Category | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
+  
+  const productsPerPage = 16; // 4x4 grid
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const currentProducts = products.slice(startIndex, startIndex + productsPerPage);
   
   useEffect(() => {
     const fetchCategoryData = async () => {
@@ -48,6 +55,17 @@ const CategoryPage = () => {
     
     fetchCategoryData();
   }, [categoryId, toast]);
+
+  // Reset to first page when category changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [categoryId]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top of products section
+    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
   
   // Format the category name (capitalize first letter)
   const formattedCategoryName = categoryId 
@@ -76,41 +94,103 @@ const CategoryPage = () => {
                 {category?.name || formattedCategoryName}
               </h1>
               <p className="text-gray-200 max-w-2xl">{category?.description}</p>
+              {products.length > 0 && (
+                <p className="text-gray-300 mt-2">
+                  {products.length} {products.length === 1 ? 'product' : 'products'} available
+                </p>
+              )}
             </div>
           </div>
         )}
         
         {/* Product grid */}
-        <div className="container-custom py-12">
+        <div id="products-section" className="container-custom py-12">
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {[...Array(8)].map((_, index) => (
+              {[...Array(16)].map((_, index) => (
                 <div key={index} className="h-64 md:h-80 bg-gray-100 animate-pulse rounded-xl shadow-lg"></div>
               ))}
             </div>
           ) : products.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-              {products.map((product, index) => (
-                <div 
-                  key={product.id}
-                  className="animate-fadeInUp" 
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <ProductCard 
-                    product={{
-                      id: product.id,
-                      name: product.name,
-                      category: categoryId || '',
-                      price: product.price,
-                      image: product.images[0],
-                      isBestseller: product.is_bestseller,
-                      isNew: product.is_new,
-                      slug: product.slug
-                    }} 
-                  />
+            <>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {currentProducts.map((product, index) => (
+                  <div 
+                    key={product.id}
+                    className="animate-fadeInUp" 
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <ProductCard 
+                      product={{
+                        id: product.id,
+                        name: product.name,
+                        category: categoryId || '',
+                        price: product.price,
+                        image: product.images[0],
+                        isBestseller: product.is_bestseller,
+                        isNew: product.is_new,
+                        slug: product.slug
+                      }} 
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center mt-12 space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 border-gold text-gold hover:bg-gold hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Previous
+                  </Button>
+                  
+                  <div className="flex space-x-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <Button
+                        key={page}
+                        variant={currentPage === page ? "default" : "outline"}
+                        onClick={() => handlePageChange(page)}
+                        className={`px-4 py-2 ${
+                          currentPage === page
+                            ? "bg-gold text-black hover:bg-yellow-500"
+                            : "border-gold text-gold hover:bg-gold hover:text-black"
+                        }`}
+                      >
+                        {page}
+                      </Button>
+                    ))}
+                  </div>
+                  
+                  <Button
+                    variant="outline"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="px-4 py-2 border-gold text-gold hover:bg-gold hover:text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Next
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Button>
                 </div>
-              ))}
-            </div>
+              )}
+
+              {/* Page info */}
+              {totalPages > 1 && (
+                <div className="text-center mt-4">
+                  <p className="text-gray-600 text-sm">
+                    Showing {startIndex + 1}-{Math.min(startIndex + productsPerPage, products.length)} of {products.length} products
+                  </p>
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-12">
               <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
