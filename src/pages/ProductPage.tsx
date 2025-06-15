@@ -7,12 +7,14 @@ import ProductCard from "@/components/ProductCard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/hooks/use-cart";
 import { getProduct, getProductReviews, getRelatedProducts } from "@/services/api";
 import { Product, Review } from "@/types/database";
 
 const ProductPage = () => {
   const { productId } = useParams<{ productId: string }>();
   const { toast } = useToast();
+  const { addItem } = useCart();
   
   const [product, setProduct] = useState<Product | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
@@ -90,6 +92,7 @@ Thank you!`;
   const handleAddToCart = () => {
     if (!product) return;
     
+    addItem(product, quantity);
     toast({
       title: "Added to cart",
       description: `${product.name} x ${quantity} has been added to your cart.`,

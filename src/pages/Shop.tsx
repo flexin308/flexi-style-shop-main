@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 import FloatingButtons from "@/components/FloatingButtons";
 import { getCategories, getProducts } from "@/services/api";
 import { Category, Product } from "@/types/database";
@@ -18,6 +20,7 @@ const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 20000]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +64,16 @@ const Shop = () => {
   const applyFilters = () => {
     let filtered = [...allProducts];
     
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.description?.toLowerCase().includes(query) ||
+        product.gender?.toLowerCase().includes(query)
+      );
+    }
+    
     // Filter by category
     if (selectedCategory !== "All") {
       filtered = filtered.filter(
@@ -84,6 +97,11 @@ const Shop = () => {
     setCurrentPage(1); // Reset to first page when filters change
   };
 
+  // Auto-apply filters when search query changes
+  useEffect(() => {
+    applyFilters();
+  }, [searchQuery, allProducts, categories]);
+
   const handleGenderChange = (gender: string, checked: boolean) => {
     if (checked) {
       setSelectedGenders([...selectedGenders, gender]);
@@ -96,6 +114,15 @@ const Shop = () => {
     setCurrentPage(page);
     // Scroll to top of products section
     document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const clearAllFilters = () => {
+    setSelectedCategory("All");
+    setSelectedGenders([]);
+    setPriceRange([0, 20000]);
+    setSearchQuery("");
+    setFilteredProducts(allProducts);
+    setCurrentPage(1);
   };
   
   return (
@@ -128,6 +155,20 @@ const Shop = () => {
             <div className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-64`}>
               <div className="bg-gray-50 p-4 rounded-lg sticky top-24">
                 <h3 className="font-bold text-lg mb-4">Filters</h3>
+                
+                {/* Search Filter */}
+                <div className="mb-6">
+                  <h4 className="font-medium mb-3">Search</h4>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Input
+                      placeholder="Search products..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
                 
                 <div className="mb-6">
                   <h4 className="font-medium mb-3">Categories</h4>
@@ -210,13 +251,7 @@ const Shop = () => {
                 <Button 
                   variant="outline"
                   className="w-full border-gray-300 text-gray-600 hover:bg-gray-100"
-                  onClick={() => {
-                    setSelectedCategory("All");
-                    setSelectedGenders([]);
-                    setPriceRange([0, 20000]);
-                    setFilteredProducts(allProducts);
-                    setCurrentPage(1);
-                  }}
+                  onClick={clearAllFilters}
                 >
                   Clear All Filters
                 </Button>
@@ -228,6 +263,9 @@ const Shop = () => {
               <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center">
                 <p className="text-gray-600 mb-4 md:mb-0">
                   Showing {Math.min(startIndex + 1, filteredProducts.length)}-{Math.min(startIndex + productsPerPage, filteredProducts.length)} of {filteredProducts.length} products
+                  {searchQuery && (
+                    <span className="text-gold ml-1">for "{searchQuery}"</span>
+                  )}
                 </p>
                 <select 
                   className="border border-gray-300 rounded p-2 w-full md:w-auto"
@@ -325,15 +363,14 @@ const Shop = () => {
                     </svg>
                   </div>
                   <h3 className="font-medium text-xl mb-2">No products found</h3>
-                  <p className="text-gray-600 mb-4">Try adjusting your filters or browse all categories</p>
+                  <p className="text-gray-600 mb-4">
+                    {searchQuery 
+                      ? `No products found for "${searchQuery}". Try different keywords or adjust your filters.`
+                      : "Try adjusting your filters or browse all categories"
+                    }
+                  </p>
                   <Button 
-                    onClick={() => {
-                      setSelectedCategory("All");
-                      setSelectedGenders([]);
-                      setPriceRange([0, 20000]);
-                      setFilteredProducts(allProducts);
-                      setCurrentPage(1);
-                    }}
+                    onClick={clearAllFilters}
                     className="bg-gold hover:bg-darkgold text-black"
                   >
                     Reset Filters
