@@ -191,11 +191,6 @@ Thank you!`;
                 <Badge className="bg-gold text-black text-xs md:text-sm">Premium Quality</Badge>
                 {product.is_bestseller && <Badge className="bg-gold text-black text-xs md:text-sm">Bestseller</Badge>}
                 {product.is_new && <Badge className="bg-black text-white text-xs md:text-sm">New</Badge>}
-                {product.gender && (
-                  <Badge variant="outline" className="border-gray-400 text-gray-700 text-xs md:text-sm capitalize">
-                    {product.gender}
-                  </Badge>
-                )}
               </div>
               
               <p className="text-gray-700 mb-4 md:mb-6 text-sm md:text-base leading-relaxed">{product.description}</p>
@@ -261,19 +256,7 @@ Thank you!`;
                   <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  Cash on Delivery Available
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
                   Free Shipping on Orders Above ₹5000
-                </div>
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                  7-Day Return Policy
                 </div>
               </div>
             </div>
@@ -295,12 +278,6 @@ Thank you!`;
                     <span className="font-medium text-sm md:text-base">Category: </span>
                     <span className="text-gray-700 capitalize text-sm md:text-base">{product.category_id}</span>
                   </div>
-                  {product.gender && (
-                    <div className="border-b pb-2">
-                      <span className="font-medium text-sm md:text-base">Gender: </span>
-                      <span className="text-gray-700 capitalize text-sm md:text-base">{product.gender}</span>
-                    </div>
-                  )}
                   <div className="border-b pb-2">
                     <span className="font-medium text-sm md:text-base">Material: </span>
                     <span className="text-gray-700 text-sm md:text-base">Premium Quality</span>
@@ -324,17 +301,9 @@ Thank you!`;
                   </div>
                   
                   <div>
-                    <h4 className="font-semibold mb-2 text-sm md:text-base">Cash on Delivery</h4>
-                    <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-                      Cash on Delivery is available for most pin codes across India. You can pay when your package arrives.
-                    </p>
-                  </div>
-                  
-                  <div>
                     <h4 className="font-semibold mb-2 text-sm md:text-base">Returns</h4>
                     <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-                      We offer a 7-day return policy for unused items in their original packaging. 
-                      Contact us via WhatsApp to initiate a return.
+                      Contact us via WhatsApp to initiate a return for any issues with your order.
                     </p>
                   </div>
                 </div>

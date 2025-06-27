@@ -18,7 +18,6 @@ const Shop = () => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedGenders, setSelectedGenders] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 20000]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -69,8 +68,7 @@ const Shop = () => {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(product =>
         product.name.toLowerCase().includes(query) ||
-        product.description?.toLowerCase().includes(query) ||
-        product.gender?.toLowerCase().includes(query)
+        product.description?.toLowerCase().includes(query)
       );
     }
     
@@ -78,13 +76,6 @@ const Shop = () => {
     if (selectedCategory !== "All") {
       filtered = filtered.filter(
         product => categories.find(cat => cat.id === product.category_id)?.slug.toLowerCase() === selectedCategory.toLowerCase()
-      );
-    }
-    
-    // Filter by gender
-    if (selectedGenders.length > 0) {
-      filtered = filtered.filter(
-        product => selectedGenders.includes(product.gender)
       );
     }
     
@@ -102,14 +93,6 @@ const Shop = () => {
     applyFilters();
   }, [searchQuery, allProducts, categories]);
 
-  const handleGenderChange = (gender: string, checked: boolean) => {
-    if (checked) {
-      setSelectedGenders([...selectedGenders, gender]);
-    } else {
-      setSelectedGenders(selectedGenders.filter(g => g !== gender));
-    }
-  };
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     // Scroll to top of products section
@@ -118,7 +101,6 @@ const Shop = () => {
 
   const clearAllFilters = () => {
     setSelectedCategory("All");
-    setSelectedGenders([]);
     setPriceRange([0, 20000]);
     setSearchQuery("");
     setFilteredProducts(allProducts);
@@ -198,27 +180,6 @@ const Shop = () => {
                           className="ml-2 text-sm font-medium cursor-pointer"
                         >
                           {category.name}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <h4 className="font-medium mb-3">Gender</h4>
-                  <div className="space-y-2">
-                    {['men', 'women', 'unisex'].map((gender) => (
-                      <div key={gender} className="flex items-center">
-                        <Checkbox 
-                          id={`gender-${gender}`}
-                          checked={selectedGenders.includes(gender)}
-                          onCheckedChange={(checked) => handleGenderChange(gender, checked as boolean)}
-                        />
-                        <Label 
-                          htmlFor={`gender-${gender}`}
-                          className="ml-2 text-sm font-medium cursor-pointer capitalize"
-                        >
-                          {gender}
                         </Label>
                       </div>
                     ))}

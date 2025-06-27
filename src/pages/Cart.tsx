@@ -128,9 +128,6 @@ Thank you!`;
                       >
                         {item.name}
                       </Link>
-                      {item.gender && (
-                        <p className="text-sm text-gray-500 capitalize mt-1">{item.gender}</p>
-                      )}
                       <p className="text-gold font-medium mt-1">₹{item.price.toLocaleString()}</p>
                     </div>
                   </div>
@@ -223,13 +220,7 @@ Thank you!`;
                     <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    Cash on Delivery Available
-                  </div>
-                  <div className="flex items-center">
-                    <svg className="w-4 h-4 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    7-Day Return Policy
+                    Free Shipping on Orders Above ₹5000
                   </div>
                 </div>
               </div>

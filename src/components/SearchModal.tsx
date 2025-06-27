@@ -46,8 +46,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     const query = searchQuery.toLowerCase();
     const filtered = allProducts.filter(product =>
       product.name.toLowerCase().includes(query) ||
-      product.description?.toLowerCase().includes(query) ||
-      product.gender?.toLowerCase().includes(query)
+      product.description?.toLowerCase().includes(query)
     ).slice(0, 8); // Limit to 8 results
 
     setSearchResults(filtered);
@@ -133,11 +132,6 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
                         <span className="text-lg font-bold text-gold">
                           ₹{product.price.toLocaleString()}
                         </span>
-                        {product.gender && (
-                          <span className="text-xs bg-gray-100 px-2 py-1 rounded capitalize">
-                            {product.gender}
-                          </span>
-                        )}
                       </div>
                     </div>
                   </Link>

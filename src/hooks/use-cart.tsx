@@ -8,7 +8,6 @@ export interface CartItem {
   image: string;
   quantity: number;
   slug?: string;
-  gender?: 'men' | 'women' | 'unisex';
 }
 
 interface CartContextType {
@@ -63,7 +62,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           image: product.images[0],
           quantity,
           slug: product.slug,
-          gender: product.gender,
         };
         return [...currentItems, newItem];
       }

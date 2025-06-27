@@ -251,23 +251,23 @@ const Contact = () => {
                 </div>
                 
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="font-bold mb-2">Do you offer Cash on Delivery?</h3>
+                  <h3 className="font-bold mb-2">How long does shipping take?</h3>
                   <p className="text-gray-700">
-                    Yes, we offer Cash on Delivery (COD) for most pin codes across India. You can select this payment option during checkout if it's available for your location.
+                    Standard delivery takes approximately 3-7 business days, depending on your location. We ship nationwide across India using reliable courier partners to ensure safe delivery.
                   </p>
                 </div>
                 
                 <div className="bg-gray-50 p-6 rounded-lg">
                   <h3 className="font-bold mb-2">What is your return policy?</h3>
                   <p className="text-gray-700">
-                    We offer a 7-day return policy for unused items in their original packaging. If you're not satisfied with your purchase, please contact us via WhatsApp to initiate the return process.
+                    If you're not satisfied with your purchase, please contact us via WhatsApp to initiate the return process.
                   </p>
                 </div>
                 
                 <div className="bg-gray-50 p-6 rounded-lg">
-                  <h3 className="font-bold mb-2">How long does shipping take?</h3>
+                  <h3 className="font-bold mb-2">How can I track my order?</h3>
                   <p className="text-gray-700">
-                    Standard delivery takes approximately 3-7 business days, depending on your location. We ship nationwide across India using reliable courier partners to ensure safe delivery.
+                    Once your order is shipped, you'll receive a tracking number via WhatsApp. You can use this to track your package online.
                   </p>
                 </div>
               </div>
