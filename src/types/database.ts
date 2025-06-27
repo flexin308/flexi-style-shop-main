@@ -20,7 +20,6 @@ export interface Product {
   is_bestseller: boolean;
   is_new: boolean;
   in_stock: boolean;
-  gender: 'men' | 'women' | 'unisex';
   created_at: string;
   updated_at: string;
 }
