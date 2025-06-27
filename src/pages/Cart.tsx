@@ -128,6 +128,9 @@ Thank you!`;
                       >
                         {item.name}
                       </Link>
+                      {item.gender && (
+                        <p className="text-sm text-gray-500 capitalize mt-1">{item.gender}</p>
+                      )}
                       <p className="text-gold font-medium mt-1">₹{item.price.toLocaleString()}</p>
                     </div>
                   </div>

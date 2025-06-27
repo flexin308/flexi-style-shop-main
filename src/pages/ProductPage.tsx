@@ -191,6 +191,11 @@ Thank you!`;
                 <Badge className="bg-gold text-black text-xs md:text-sm">Premium Quality</Badge>
                 {product.is_bestseller && <Badge className="bg-gold text-black text-xs md:text-sm">Bestseller</Badge>}
                 {product.is_new && <Badge className="bg-black text-white text-xs md:text-sm">New</Badge>}
+                {product.gender && (
+                  <Badge variant="outline" className="border-gray-400 text-gray-700 text-xs md:text-sm capitalize">
+                    {product.gender}
+                  </Badge>
+                )}
               </div>
               
               <p className="text-gray-700 mb-4 md:mb-6 text-sm md:text-base leading-relaxed">{product.description}</p>
@@ -278,6 +283,12 @@ Thank you!`;
                     <span className="font-medium text-sm md:text-base">Category: </span>
                     <span className="text-gray-700 capitalize text-sm md:text-base">{product.category_id}</span>
                   </div>
+                  {product.gender && (
+                    <div className="border-b pb-2">
+                      <span className="font-medium text-sm md:text-base">Gender: </span>
+                      <span className="text-gray-700 capitalize text-sm md:text-base">{product.gender}</span>
+                    </div>
+                  )}
                   <div className="border-b pb-2">
                     <span className="font-medium text-sm md:text-base">Material: </span>
                     <span className="text-gray-700 text-sm md:text-base">Premium Quality</span>
