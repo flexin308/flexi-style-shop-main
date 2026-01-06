@@ -8,7 +8,10 @@ const Footer = () => {
       <div className="container-custom pt-12 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold text-gold mb-4">Flexnex</h3>
+            <h3 className="text-xl font-bold mb-4" aria-label="Flexnex">
+              <span className="text-white">Flex</span>
+              <span className="text-gold">nex</span>
+            </h3>
             <p className="text-gray-300 mb-6 max-w-xs">
               Your destination for premium fashion and accessories. Quality that speaks, prices that don't break the bank.
             </p>

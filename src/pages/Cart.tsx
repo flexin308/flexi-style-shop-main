@@ -38,21 +38,10 @@ const Cart = () => {
   const proceedToWhatsApp = () => {
     if (items.length === 0) return;
 
-    const message = `Hi! I'd like to place an order for the following items from Flexnex:
-
-${items.map((item, index) => 
-  `${index + 1}. ${item.name}
-   Quantity: ${item.quantity}
-   Price: ₹${item.price.toLocaleString()} each
-   Subtotal: ₹${(item.price * item.quantity).toLocaleString()}`
-).join('\n\n')}
-
-🛍️ Total Items: ${getTotalItems()}
-💰 Total Amount: ₹${getTotalPrice().toLocaleString()}
-
-Please confirm availability and delivery details.
-
-Thank you!`;
+    const message = `Hey! I want to order:
+${items.map((item) => `- ${item.name} x${item.quantity}`).join("\n")}
+Total: ₹${getTotalPrice().toLocaleString()}
+Link: ${window.location.href}`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/918291821901?text=${encodedMessage}`, "_blank");

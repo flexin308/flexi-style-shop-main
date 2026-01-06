@@ -30,8 +30,9 @@ const Navbar = () => {
             <button onClick={toggleMenu} className="lg:hidden text-white mr-3 sm:mr-4">
               {isMenuOpen ? <X size={20} className="sm:w-6 sm:h-6" /> : <Menu size={20} className="sm:w-6 sm:h-6" />}
             </button>
-            <Link to="/" className="text-gold font-montserrat font-bold text-xl sm:text-2xl">
-              Flexnex
+            <Link to="/" className="font-montserrat font-bold text-xl sm:text-2xl tracking-tight" aria-label="Flexnex">
+              <span className="text-white">Flex</span>
+              <span className="text-gold">nex</span>
             </Link>
           </div>
 

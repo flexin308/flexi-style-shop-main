@@ -63,12 +63,11 @@ const TrustBadges = () => {
           {trustFeatures.map((feature, index) => (
             <div 
               key={feature.id} 
-              className="group bg-white p-4 md:p-6 rounded-xl shadow-lg hover:shadow-xl text-center transform hover:-translate-y-2 transition-all duration-500 border border-gray-100 hover:border-gold/20"
+              className="group bg-white p-4 md:p-6 rounded-xl shadow-sm hover:shadow-md text-center transition-all duration-300 border border-gray-100 hover:border-gold/20"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="relative">
-                <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-gold/20 to-yellow-500/20 text-gold rounded-full mb-4 group-hover:scale-110 transition-transform duration-300 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-gold/10 to-transparent rounded-full transform rotate-45 group-hover:animate-ping"></div>
+                <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-gold/20 to-yellow-500/20 text-gold rounded-full mb-4 transition-transform duration-300">
                   <div className="relative z-10">
                     {feature.icon}
                   </div>
@@ -80,35 +79,8 @@ const TrustBadges = () => {
               <p className="text-gray-600 text-xs md:text-sm leading-relaxed">
                 {feature.description}
               </p>
-              
-              {/* Decorative element */}
-              <div className="mt-4 w-8 h-0.5 bg-gradient-to-r from-gold to-transparent mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             </div>
           ))}
-        </div>
-        
-        {/* Additional trust indicators */}
-        <div className="mt-16 text-center">
-          <div className="inline-flex items-center space-x-8 p-6 bg-white rounded-full shadow-lg">
-            <div className="flex items-center space-x-2">
-              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium text-gray-700">50,000+ Happy Customers</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium text-gray-700">4.8/5 Rating</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-medium text-gray-700">Trusted Since 2020</span>
-            </div>
-          </div>
         </div>
       </div>
     </section>

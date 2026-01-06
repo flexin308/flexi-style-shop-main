@@ -69,39 +69,33 @@ const CategoryGrid = () => {
                 <Link 
                   to={`/category/${category.slug}`} 
                   key={category.id}
-                  className="group relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                  className="group relative overflow-hidden rounded-2xl border border-black/5 bg-white shadow-sm hover:shadow-lg transition-shadow duration-300"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="relative h-64 md:h-80">
                     <div 
-                      className="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                       style={{ backgroundImage: `url(${category.image})` }}
                     ></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent group-hover:from-black/95 transition-all duration-500"></div>
-                    
-                    {/* Shine effect */}
-                    <div className="absolute inset-0 -top-24 -left-24 w-24 h-full bg-gradient-to-br from-white/30 to-transparent rotate-45 transform translate-x-full group-hover:translate-x-0 transition-transform duration-1000 ease-out"></div>
-                    
-                    {/* Content */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 text-white">
-                      <div className="transform group-hover:translate-y-0 translate-y-2 transition-transform duration-500">
-                        <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2">{category.name}</h3>
-                        <p className="text-xs md:text-sm text-gray-300 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200">
-                          {category.description}
-                        </p>
-                        <div className="mt-2 md:mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300">
-                          <span className="inline-flex items-center text-gold text-xs md:text-sm font-medium">
-                            Explore Collection
-                            <svg className="ml-1 w-3 h-3 md:w-4 md:h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent transition-colors duration-300 group-hover:from-black/80"></div>
+
+                    <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 text-white">
+                      <div className="flex items-end justify-between gap-3">
+                        <div className="min-w-0">
+                          <h3 className="text-lg md:text-xl font-semibold leading-tight truncate">{category.name}</h3>
+                          <p className="hidden md:block text-sm text-gray-200 mt-1 line-clamp-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            {category.description}
+                          </p>
+                        </div>
+                        <div className="shrink-0">
+                          <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm border border-white/15">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                           </span>
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Border glow */}
-                    <div className="absolute inset-0 border-2 border-transparent group-hover:border-gold/50 rounded-xl transition-all duration-500"></div>
                   </div>
                 </Link>
               ))}

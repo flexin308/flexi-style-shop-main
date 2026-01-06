@@ -1,4 +1,11 @@
 {
+  "redirects": [
+    {
+      "source": "/admin/:path*",
+      "destination": "https://rupee-commerce-control-panel.vercel.app/admin/:path*",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

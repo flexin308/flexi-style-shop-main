@@ -3,6 +3,8 @@ const testimonials = [
     id: 1,
     name: "Rahul Singh",
     location: "Mumbai",
+    image:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=256&auto=format&fit=crop",
     quote: "The quality of the sneakers I received was outstanding. They look and feel just like the originals. Couldn't be happier with my purchase.",
     rating: 5
   },
@@ -10,6 +12,8 @@ const testimonials = [
     id: 2,
     name: "Priya Sharma",
     location: "Delhi",
+    image:
+      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=256&auto=format&fit=crop",
     quote: "I was skeptical at first, but the watch I ordered exceeded my expectations. Great quality and fast delivery. Will definitely shop again.",
     rating: 5
   },
@@ -17,6 +21,8 @@ const testimonials = [
     id: 3,
     name: "Vikram Patel",
     location: "Bangalore",
+    image:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=256&auto=format&fit=crop",
     quote: "The handbag is incredibly well-made. My friends couldn't tell it wasn't the original brand. Amazing value for money!",
     rating: 4
   }
@@ -28,7 +34,7 @@ const Testimonials = () => {
       <div className="container-custom">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Customers Say</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
+          <p className="text-gray-300 max-w-3xl mx-auto">
             Don't just take our word for it. See what our customers have to say about their Flexnex experience.
           </p>
         </div>
@@ -57,8 +63,13 @@ const Testimonials = () => {
               <blockquote className="text-gray-300 mb-4 italic">"{testimonial.quote}"</blockquote>
               
               <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-gold text-black flex items-center justify-center font-bold mr-3">
-                  {testimonial.name.charAt(0)}
+                <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-800 mr-3">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <div>
                   <p className="font-medium">{testimonial.name}</p>

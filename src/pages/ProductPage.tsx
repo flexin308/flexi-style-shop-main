@@ -72,17 +72,10 @@ const ProductPage = () => {
   const openWhatsApp = () => {
     if (!product) return;
     
-    // Format the message with detailed product information
-    const message = `Hi! I'm interested in purchasing the following product from Flexnex:
-
-🛍️ Product: ${product.name}
-💰 Price: ₹${product.price.toLocaleString()}
-📦 Quantity: ${quantity}
-💵 Total: ₹${(product.price * quantity).toLocaleString()}
-
-Could you please provide more information about availability and delivery details?
-
-Thank you!`;
+    const message = `Hey! I want to order:
+${product.name} x${quantity}
+Total: ₹${(product.price * quantity).toLocaleString()}
+Link: ${window.location.href}`;
     const encodedMessage = encodeURIComponent(message);
     
     // Updated WhatsApp number as requested

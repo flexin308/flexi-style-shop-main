@@ -4,10 +4,11 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 import FloatingButtons from "@/components/FloatingButtons";
 import { getCategories, getProducts } from "@/services/api";
 import { Category, Product } from "@/types/database";
@@ -17,10 +18,10 @@ const Shop = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategorySlug, setSelectedCategorySlug] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState([0, 20000]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showFilters, setShowFilters] = useState(false);
+  const [sortOption, setSortOption] = useState<"featured" | "price-low" | "price-high" | "newest">("featured");
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const { toast } = useToast();
@@ -73,9 +74,9 @@ const Shop = () => {
     }
     
     // Filter by category
-    if (selectedCategory !== "All") {
+    if (selectedCategorySlug) {
       filtered = filtered.filter(
-        product => categories.find(cat => cat.id === product.category_id)?.slug.toLowerCase() === selectedCategory.toLowerCase()
+        product => categories.find(cat => cat.id === product.category_id)?.slug.toLowerCase() === selectedCategorySlug.toLowerCase()
       );
     }
     
@@ -83,15 +84,27 @@ const Shop = () => {
     filtered = filtered.filter(
       product => product.price >= priceRange[0] && product.price <= priceRange[1]
     );
+
+    if (sortOption === "price-low") {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (sortOption === "price-high") {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (sortOption === "newest") {
+      filtered.sort((a, b) => {
+        const aTime = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const bTime = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return bTime - aTime;
+      });
+    }
     
     setFilteredProducts(filtered);
     setCurrentPage(1); // Reset to first page when filters change
   };
 
-  // Auto-apply filters when search query changes
+  // Auto-apply filters
   useEffect(() => {
     applyFilters();
-  }, [searchQuery, allProducts, categories]);
+  }, [searchQuery, selectedCategorySlug, priceRange, sortOption, allProducts, categories]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -100,12 +113,82 @@ const Shop = () => {
   };
 
   const clearAllFilters = () => {
-    setSelectedCategory("All");
+    setSelectedCategorySlug(null);
     setPriceRange([0, 20000]);
     setSearchQuery("");
+    setSortOption("featured");
     setFilteredProducts(allProducts);
     setCurrentPage(1);
   };
+
+  const activeCategory = selectedCategorySlug
+    ? categories.find((c) => c.slug.toLowerCase() === selectedCategorySlug.toLowerCase())
+    : null;
+
+  const hasActiveFilters =
+    Boolean(searchQuery.trim()) ||
+    Boolean(selectedCategorySlug) ||
+    priceRange[0] !== 0 ||
+    priceRange[1] !== 20000;
+
+  const FiltersContent = (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <div className="font-semibold">Category</div>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            type="button"
+            variant={selectedCategorySlug ? "outline" : "default"}
+            className="rounded-full"
+            onClick={() => setSelectedCategorySlug(null)}
+          >
+            All
+          </Button>
+          {categories.map((category) => (
+            <Button
+              key={category.id}
+              type="button"
+              variant={selectedCategorySlug?.toLowerCase() === category.slug.toLowerCase() ? "default" : "outline"}
+              className="rounded-full"
+              onClick={() => setSelectedCategorySlug(category.slug)}
+            >
+              {category.name}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-3">
+        <div className="font-semibold">Price</div>
+        <Slider
+          defaultValue={[0, 20000]}
+          max={20000}
+          step={500}
+          value={priceRange}
+          onValueChange={setPriceRange}
+          className="mb-2"
+        />
+        <div className="flex items-center justify-between text-sm text-gray-700">
+          <span>₹{priceRange[0].toLocaleString()}</span>
+          <span>₹{priceRange[1].toLocaleString()}</span>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <div className="font-semibold">Sort</div>
+        <select
+          className="border border-gray-300 rounded p-2 w-full"
+          value={sortOption}
+          onChange={(e) => setSortOption(e.target.value as typeof sortOption)}
+        >
+          <option value="featured">Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+    </div>
+  );
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -121,28 +204,13 @@ const Shop = () => {
         </div>
         
         <div className="container-custom py-8">
-          {/* Mobile filter button */}
-          <div className="md:hidden mb-4">
-            <Button 
-              className="w-full" 
-              variant="outline"
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              {showFilters ? "Hide Filters" : "Show Filters"}
-            </Button>
-          </div>
-          
           <div className="flex flex-col md:flex-row gap-6">
-            {/* Filters sidebar */}
-            <div className={`${showFilters ? 'block' : 'hidden'} md:block w-full md:w-64`}>
-              <div className="bg-gray-50 p-4 rounded-lg sticky top-24">
-                <h3 className="font-bold text-lg mb-4">Filters</h3>
-                
-                {/* Search Filter */}
-                <div className="mb-6">
-                  <h4 className="font-medium mb-3">Search</h4>
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            {/* Products grid */}
+            <div id="products-section" className="flex-1">
+              <div className="mb-6 space-y-4">
+                <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
                     <Input
                       placeholder="Search products..."
                       value={searchQuery}
@@ -150,93 +218,158 @@ const Shop = () => {
                       className="pl-10"
                     />
                   </div>
-                </div>
-                
-                <div className="mb-6">
-                  <h4 className="font-medium mb-3">Categories</h4>
-                  <div className="space-y-2">
-                    <div className="flex items-center">
-                      <Checkbox 
-                        id="category-All"
-                        checked={selectedCategory === "All"}
-                        onCheckedChange={() => setSelectedCategory("All")}
-                      />
-                      <Label 
-                        htmlFor="category-All"
-                        className="ml-2 text-sm font-medium cursor-pointer"
-                      >
-                        All
-                      </Label>
-                    </div>
-                    {categories.map((category) => (
-                      <div key={category.id} className="flex items-center">
-                        <Checkbox 
-                          id={`category-${category.slug}`}
-                          checked={selectedCategory === category.slug}
-                          onCheckedChange={() => setSelectedCategory(category.slug)}
-                        />
-                        <Label 
-                          htmlFor={`category-${category.slug}`}
-                          className="ml-2 text-sm font-medium cursor-pointer"
-                        >
-                          {category.name}
-                        </Label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="mb-6">
-                  <h4 className="font-medium mb-3">Price Range</h4>
-                  <Slider
-                    defaultValue={[0, 20000]}
-                    max={20000}
-                    step={500}
-                    value={priceRange}
-                    onValueChange={setPriceRange}
-                    className="mb-4"
-                  />
-                  <div className="flex items-center justify-between text-sm">
-                    <span>₹{priceRange[0].toLocaleString()}</span>
-                    <span>₹{priceRange[1].toLocaleString()}</span>
-                  </div>
-                </div>
-                
-                <Button 
-                  className="w-full bg-gold hover:bg-darkgold text-black mb-4"
-                  onClick={applyFilters}
-                >
-                  Apply Filters
-                </Button>
 
-                <Button 
-                  variant="outline"
-                  className="w-full border-gray-300 text-gray-600 hover:bg-gray-100"
-                  onClick={clearAllFilters}
-                >
-                  Clear All Filters
-                </Button>
-              </div>
-            </div>
-            
-            {/* Products grid */}
-            <div id="products-section" className="flex-1">
-              <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center">
-                <p className="text-gray-600 mb-4 md:mb-0">
-                  Showing {Math.min(startIndex + 1, filteredProducts.length)}-{Math.min(startIndex + productsPerPage, filteredProducts.length)} of {filteredProducts.length} products
-                  {searchQuery && (
-                    <span className="text-gold ml-1">for "{searchQuery}"</span>
-                  )}
-                </p>
-                <select 
-                  className="border border-gray-300 rounded p-2 w-full md:w-auto"
-                  defaultValue="featured"
-                >
-                  <option value="featured">Featured</option>
-                  <option value="price-low">Price: Low to High</option>
-                  <option value="price-high">Price: High to Low</option>
-                  <option value="newest">Newest</option>
-                </select>
+                  <div className="flex items-center justify-between gap-2">
+                    <Sheet>
+                      <SheetTrigger asChild>
+                        <Button variant="outline" className="md:hidden w-full">
+                          <SlidersHorizontal className="w-4 h-4 mr-2" />
+                          Filters
+                        </Button>
+                      </SheetTrigger>
+                      <SheetContent side="bottom" className="max-h-[85vh] overflow-auto">
+                        <SheetHeader>
+                          <SheetTitle>Filters</SheetTitle>
+                        </SheetHeader>
+                        <div className="mt-6">{FiltersContent}</div>
+                        <SheetFooter className="mt-6">
+                          <SheetClose asChild>
+                            <Button variant="outline" onClick={clearAllFilters}>
+                              Clear all
+                            </Button>
+                          </SheetClose>
+                          <SheetClose asChild>
+                            <Button className="bg-gold hover:bg-darkgold text-black">Done</Button>
+                          </SheetClose>
+                        </SheetFooter>
+                      </SheetContent>
+                    </Sheet>
+
+                    <div className="hidden md:flex items-center gap-2">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" className="rounded-full">
+                            {activeCategory ? activeCategory.name : "Category"}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent align="start" className="w-[420px]">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="font-semibold">Category</div>
+                            {selectedCategorySlug && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 px-2"
+                                onClick={() => setSelectedCategorySlug(null)}
+                              >
+                                <X className="w-4 h-4 mr-1" />
+                                Clear
+                              </Button>
+                            )}
+                          </div>
+                          <div className="flex flex-wrap gap-2">
+                            <Button
+                              type="button"
+                              variant={selectedCategorySlug ? "outline" : "default"}
+                              className="rounded-full"
+                              onClick={() => setSelectedCategorySlug(null)}
+                            >
+                              All
+                            </Button>
+                            {categories.map((category) => (
+                              <Button
+                                key={category.id}
+                                type="button"
+                                variant={
+                                  selectedCategorySlug?.toLowerCase() === category.slug.toLowerCase() ? "default" : "outline"
+                                }
+                                className="rounded-full"
+                                onClick={() => setSelectedCategorySlug(category.slug)}
+                              >
+                                {category.name}
+                              </Button>
+                            ))}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" className="rounded-full">
+                            Price
+                            <span className="ml-2 text-gray-500 font-normal">
+                              ₹{priceRange[0].toLocaleString()}–₹{priceRange[1].toLocaleString()}
+                            </span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent align="start" className="w-[420px]">
+                          <div className="font-semibold mb-3">Price</div>
+                          <Slider
+                            defaultValue={[0, 20000]}
+                            max={20000}
+                            step={500}
+                            value={priceRange}
+                            onValueChange={setPriceRange}
+                            className="mb-4"
+                          />
+                          <div className="flex items-center justify-between text-sm text-gray-700">
+                            <span>₹{priceRange[0].toLocaleString()}</span>
+                            <span>₹{priceRange[1].toLocaleString()}</span>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+
+                      <select
+                        className="border border-gray-300 rounded-full px-3 py-2"
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value as typeof sortOption)}
+                      >
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest</option>
+                      </select>
+
+                      {hasActiveFilters && (
+                        <Button variant="ghost" className="text-gray-600" onClick={clearAllFilters}>
+                          Clear all
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="text-gray-700">
+                    <span className="font-medium">{filteredProducts.length}</span> products
+                    {searchQuery.trim() && <span className="text-gold ml-2">“{searchQuery.trim()}”</span>}
+                  </div>
+
+                  <div className={cn("flex flex-wrap gap-2", !hasActiveFilters && "hidden")}>
+                    {activeCategory && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full"
+                        onClick={() => setSelectedCategorySlug(null)}
+                      >
+                        {activeCategory.name}
+                        <X className="w-4 h-4 ml-2" />
+                      </Button>
+                    )}
+                    {(priceRange[0] !== 0 || priceRange[1] !== 20000) && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded-full"
+                        onClick={() => setPriceRange([0, 20000])}
+                      >
+                        ₹{priceRange[0].toLocaleString()}–₹{priceRange[1].toLocaleString()}
+                        <X className="w-4 h-4 ml-2" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
               </div>
               
               {isLoading ? (

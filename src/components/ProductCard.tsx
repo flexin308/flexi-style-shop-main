@@ -21,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const productUrl = product.slug || product.id;
   
   return (
-    <Card className="overflow-hidden border-0 shadow-sm hover:shadow-md transition-shadow duration-300">
+    <Card className="group overflow-hidden border-0 shadow-sm hover:shadow-md transition-shadow duration-300">
       <Link to={`/product/${productUrl}`} className="block">
         <div className="relative aspect-square overflow-hidden">
           <img 
@@ -43,7 +43,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
         
         <CardContent className="p-4">
           <h3 className="font-medium text-lg mb-1 line-clamp-1">{product.name}</h3>
-          <p className="text-sm text-gray-500 mb-2 capitalize">{product.category}</p>
+          <p className="text-sm text-gray-500 mb-2 capitalize sm:block md:opacity-0 md:group-hover:opacity-100 md:transition-opacity">
+            {product.category}
+          </p>
           <p className="font-bold text-lg">₹{product.price.toLocaleString()}</p>
         </CardContent>
       </Link>
