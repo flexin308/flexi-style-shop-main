@@ -15,7 +15,7 @@ export interface Product {
   category_id: string;
   price: number;
   description: string | null;
-  features: any | null;
+  features: unknown | null;
   images: string[];
   is_bestseller: boolean;
   is_new: boolean;

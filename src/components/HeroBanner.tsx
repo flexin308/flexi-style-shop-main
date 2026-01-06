@@ -30,7 +30,7 @@ const HeroBanner = () => {
             <Link to="/about">
               <Button
                 variant="outline"
-                className="border-white/40 text-white hover:bg-white hover:text-black px-7 py-6 text-base font-semibold rounded-full"
+                className="bg-white text-black border-white px-7 py-6 text-base font-semibold rounded-full hover:bg-white"
               >
                 Learn More
               </Button>
